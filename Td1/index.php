@@ -13,7 +13,7 @@ $capsule = new Capsule;
 
 $capsule->addConnection([
 
-   "driver" => "pdo_mysql",
+   "driver" => "mysql",
 
    "host" =>"127.0.0.1",
 
@@ -37,15 +37,16 @@ $capsule->setAsGlobal();
 // Setup the Eloquent ORM.
 $capsule->bootEloquent();
 $capsule->bootEloquent();
-
+$capsule->setAsGlobal();
+/*
 class Item extends Model{
     protected $table = 'item'; 
     protected $primaryKey = 'id';
 }
 
-$list =Item::Where('lebelle','like','%eau%')->get();
+$list =Item::Where('libelle','like','%eau%')->get();
 if ($list != null){
     foreach($list as $item){
     print $item->id;
 }
-}
+}*/

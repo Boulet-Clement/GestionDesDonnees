@@ -1,5 +1,5 @@
 <?php
-namespace src\model;
+namespace src\Model;
 use \Illuminate\Database\Eloquent\Model;
 
 class Item extends Model{
