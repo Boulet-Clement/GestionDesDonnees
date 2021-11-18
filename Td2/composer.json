@@ -1,0 +1,16 @@
+{
+    "authors": [
+        {
+            "name": "Boulet Clément",
+            "email": "clement.boulet60510@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Td2\\src\\": "./src"
+        }
+    }
+}
