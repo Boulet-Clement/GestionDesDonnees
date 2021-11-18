@@ -9,4 +9,7 @@ class Carte extends Model{
     public static function findAll(){
         return Carte::all();
     }
+    public static function findAllAlphabetic(){
+        
+    }
 }
