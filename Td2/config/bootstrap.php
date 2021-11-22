@@ -12,7 +12,7 @@ use App\Model\Article;
 
 //require __DIR__ . '/../src/Model/Article.php';
 
-$a = new Article(); $a->nom = 'velo'; $a->tarif=273;
+$a = new Article(null,$myPdo); $a->nom = 'velo'; $a->tarif=273;
 $a->insert();
 $liste = Article::all();
 foreach( $liste as $article) {

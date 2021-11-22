@@ -3,23 +3,23 @@ namespace App\Model;
 use App\Model\Model;
 //require __DIR__ . '/Model.php';
 class Article extends Model{
-    private $id, $nom, $description, $tarif, $stock;
+    private $id, $nom, $description, $tarif, $stock, $pdo;
 
     protected static $table='article';
     protected static $idColumn='id';
 
-    public function __construct( array $t=null) {
+    public function __construct( array $t=null,$pdo) {
+        $this->pdo = $pdo;
     /* initialiser les attributs */
     }
 
     public static function findById(Int $id) : Article {
-        $pdo= ConnectionFactory::getConnection();
         $sql = 'select * from article where id= ?';
-        $stmt=$pdo->prepare($sql);
+        $stmt=self::$pdo->prepare($sql);
         $stmt->bindParam(1, $id, \PDO::PARAM_INT);
         if ($stmt->execute()) {
         $article_data = $stmt->fetch(\PDO::FETCH_ASSOC);
-        return new \models\Article( $article_data );
+        return new Article( $article_data , self::$pdo);
         } else return null ;
     }
 }
