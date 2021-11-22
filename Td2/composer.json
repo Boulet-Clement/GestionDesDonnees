@@ -10,7 +10,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Td2\\src\\": "./src"
-        }
+            "App\\": "src/"
+        },
+        "psr-0": {"": "src/"}
     }
 }
