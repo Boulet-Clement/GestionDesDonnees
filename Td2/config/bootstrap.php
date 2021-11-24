@@ -1,6 +1,7 @@
 <?php 
 
-require __DIR__ . '/connexion.php';
+use config\ConnectionFactory;
+//require __DIR__ . '/connexion.php';
 
 $conf = parse_ini_file('db.conf.ini');
 
@@ -12,9 +13,9 @@ use App\Model\Article;
 
 //require __DIR__ . '/../src/Model/Article.php';
 
-$a = new Article(null,$myPdo); $a->nom = 'velo'; $a->tarif=273;
+/*$a = new Article(null,$myPdo); $a->nom = 'velo'; $a->tarif=273;
 $a->insert();
 $liste = Article::all();
 foreach( $liste as $article) {
- print $article->nom;
-}
+    print $article->nom;
+}*/

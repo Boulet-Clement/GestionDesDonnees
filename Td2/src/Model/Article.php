@@ -22,4 +22,11 @@ class Article extends Model{
         return new Article( $article_data , self::$pdo);
         } else return null ;
     }
+
+    private function insert() :int {
+        $sql = 'insert into article(`nom`,`descr`,`tarif`,`stock`) values (?,?,?,?)';
+        // bind param 
+        $stmt=self::$pdo->prepare($sql);
+        return $stmt->execute();
+    }
 }
