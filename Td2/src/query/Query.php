@@ -1,4 +1,5 @@
 <?php 
+use config\ConnectionFactory;
 
 class Query {
     private $sqltable;
@@ -30,7 +31,7 @@ class Query {
         $this->sql = 'select ' . $this->fields . 
                     ' from ' . $this->sqltable;
             /* ... to do ... */
-        $stmt = ConnectionFactory::$pdo->prepare($this->sql); // A verifier ci ceci fonctionne correctement
+        $stmt = ConnectionFactory::getConnection()->prepare($this->sql); // A verifier ci ceci fonctionne correctement
         $stmt->execute($this->args);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }

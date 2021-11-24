@@ -16,7 +16,7 @@ class Model {
             return $this->_v[$name];
     }
 
-    public function __set(string $name,mixed $val) : void {
+    public function __set(string $name, $val) : void {
         $this->_v[$name] = $val;
     }
 }
