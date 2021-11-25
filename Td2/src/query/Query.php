@@ -1,4 +1,5 @@
 <?php 
+namespace App\query;
 use config\ConnectionFactory;
 
 class Query {

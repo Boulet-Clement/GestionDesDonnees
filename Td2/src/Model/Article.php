@@ -34,4 +34,5 @@ class Article extends Model{
         $this->__set("id",ConnectionFactory::getConnection()->lastInsertID());
         return $retour;
     }
+
 }
