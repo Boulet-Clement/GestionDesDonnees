@@ -11,7 +11,7 @@ class Article extends Model{
 
     public function __construct( array $t=null) {
     /* initialiser les attributs */
-        if(!is_null($t)) $this->_v = $t;//Comme ça? 
+        if(!is_null($t)) $this->_v = $t;
     }
 
     public static function findById(Int $id) : Article {
