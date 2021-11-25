@@ -14,8 +14,14 @@ $myPdo = ConnectionFactory::getConnection();
 
 //require __DIR__ . '/../src/Model/Article.php';
 
-$a = new Article(); $a->nom ='velo'; $a->tarif=273;
+$a = new Article(); 
+$a->nom ='oui'; 
+$a->tarif=243;
+$a->descr="un test";
+$a->categorie=1;
 $a->insert(); //? pourquoi faut-il la mettre publique?
+echo $a->id;
+var_dump(Article::findById($a->id));
 /*$liste = Article::all();
 foreach( $liste as $article) {
     print $article->nom;

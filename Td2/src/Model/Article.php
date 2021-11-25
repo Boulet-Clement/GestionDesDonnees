@@ -2,15 +2,16 @@
 namespace App\Model;
 use App\Model\Model;
 use config\ConnectionFactory;
-//require __DIR__ . '/Model.php';
+use \PDO;
+
 class Article extends Model{
-    private $id, $nom, $description, $tarif, $stock;
 
     protected static $table='article';
     protected static $idColumn='id';
 
     public function __construct( array $t=null) {
     /* initialiser les attributs */
+        if(!is_null($t)) $this->_v = $t;//Comme ça? 
     }
 
     public static function findById(Int $id) : Article {
@@ -24,9 +25,13 @@ class Article extends Model{
     }
 
     public function insert() :int {
-        $sql = 'insert into article(`nom`,`descr`,`tarif`,`id_categ`) values (\'test\',\'ouiiii\',201,1)';
-        // bind param 
+        $sql = 'insert into article(`nom`,`descr`,`tarif`,`id_categ`) values (?,?,?,?)';
         $stmt=ConnectionFactory::getConnection()->prepare($sql);
-        return $stmt->execute();
+        $retour = $stmt->execute(array($this->__get("nom"),
+                                $this->__get("descr"),
+                                $this->__get("tarif"),
+                                $this->__get("categorie")));
+        $this->__set("id",ConnectionFactory::getConnection()->lastInsertID());
+        return $retour;
     }
 }
