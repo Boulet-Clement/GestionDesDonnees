@@ -1,4 +1,4 @@
-<?php /*
+<?php 
 $manager = new MongoDB\Driver\Manager("mongodb://cboulet:motdepasse1@localhost:27017");
 var_dump($manager);
 
@@ -9,5 +9,6 @@ var_dump($manager);
    // select a database
    $db = $m->commune;
 	
-   echo "Database mydb selected";*/
-phpinfo();
+   echo "Database mydb selected";
+   /*
+phpinfo();*/
