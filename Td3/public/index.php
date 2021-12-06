@@ -12,7 +12,10 @@ $response = file_get_contents('https://geoservices.grand-nancy.org/arcgis/rest/s
 var_dump($response);
 $json = json_decode($response);
 
-var_dump($json->{'features'});
+foreach ($json->{'features'} as $item) {
+    $collection->insertOne($item);
+ }
+
 /*
 echo "Inserted with Object ID '{$result->getInsertedId()}'";
 
