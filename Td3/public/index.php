@@ -18,7 +18,7 @@ $cursor = $collection->find();
    // iterate cursor to display title of documents
   // file_put_contents("test.json",$cursor);
 
-    $myfile = fopen("test.json", "w") or die("Unable to open file!");
+    /*$myfile = fopen("test.json", "w") or die("Unable to open file!");
     fwrite($myfile,"{\"parkings\":[");
     foreach ($cursor as $document) {
         fwrite($myfile,json_encode($document));
@@ -28,4 +28,4 @@ $cursor = $collection->find();
     }
     //ftruncate($myfile, rand(1, filesize("test.json")-1));
     fwrite($myfile,"]}");
-    fclose($myfile);
+    fclose($myfile);*/
