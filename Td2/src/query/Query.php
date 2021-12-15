@@ -22,15 +22,21 @@ class Query {
 
     public function where(string $col,
                             string $op,
-                            mixed $val): Query {
-        /* ... to do ... */
-        $this->args[]=$val;
+                            string $val): Query {
+        if ($this->where == null){
+            $this->where = $col . ' ' . $op . ' "' . $val .'"';
+        }else{
+            $this->where = $this->where . ' and ' . $col . ' ' . $op . ' "' . $val .'"';
+        }
+        
         return $this;
     }
 
     public function get() : Array {
         $this->sql = 'select ' . $this->fields . 
-                    ' from ' . $this->sqltable;
+                    ' from ' . $this->sqltable .
+                    ' where ' . $this->where;
+        echo($this->sql);
             /* ... to do ... */
         $stmt = ConnectionFactory::getConnection()->prepare($this->sql); // A verifier ci ceci fonctionne correctement
         $stmt->execute($this->args);
