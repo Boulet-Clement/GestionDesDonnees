@@ -29,7 +29,7 @@ services:
     networks:
     - catamongo.net
     ports:
-    - 27017:27017
+    - 27020:27017
   mongo-express:
     image: mongo-express:latest
     networks:
