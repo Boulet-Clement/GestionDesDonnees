@@ -19,4 +19,6 @@ if ($parkingJSON === "[]"){
   $parkingJSON = json_encode(iterator_to_array($cursor));
 }
 
+echo $parkingJSON;
+
 
