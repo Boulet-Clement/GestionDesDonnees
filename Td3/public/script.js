@@ -12,7 +12,7 @@ function displayMap(lat, lon) {
 }
 
 //Fonction d'ajout d'un marker
-function addMarker(lat, long, p_titre, p_descritpion, img) {
+function addParkingMarker(lat, long, parking) {
 
     const el = document.createElement('div');
 
@@ -21,12 +21,28 @@ function addMarker(lat, long, p_titre, p_descritpion, img) {
     el.style.backgroundSize = '100%';
     el.style.backgroundRepeat = 'no-repeat'
 
-    el.style.backgroundImage = img;
-    const popup = new mapboxgl.Popup({ offset: 25 }).setText(
-        `${p_titre} : ${p_descritpion}`
+    el.style.backgroundImage = 'url(./assets/images/1072465.png)';
+    let popup_div = document.createElement("div");
+    let popup_title = document.createElement("h1");
+        popup_title.innerText = parking.attributes.NOM
+    let popup_button = document.createElement("button");
+        popup_button.setAttribute("id","test")
+        popup_button.innerText="test";
+        popup_button.addEventListener("click", function(){
+            console.log("ah")
+        })
+        popup_div.appendChild(popup_title);
+        popup_div.appendChild(popup_button);
+    const popup = new mapboxgl.Popup({ offset: 25 }).setDOMContent(
+        popup_div
     );
-
+        /* `<h1>${parking.attributes.NOM}</h1>
+        <p>capacité : ${parking.attributes.CAPACITE}
+            <br/> places: ${parking.attributes.PLACES}
+            <br/> <button id="btn-${parking._id.$oid}">Voir les commentaires</button>
+        </p>` */
     new mapboxgl.Marker(el).setLngLat([long, lat]).setPopup(popup).addTo(map);
+    
 }
 
 //Ajout du marker rouge "vous êtes ici"
@@ -55,6 +71,7 @@ async function getParkings() {
     // les données arrivent correctement
     xhr.addEventListener("load", function (response) {
         addParkings(response.target.response);
+        //addEventClicks(response.target.response);
     });
     // on a un code d'erreur
     xhr.addEventListener("error", function (response) {
@@ -67,10 +84,22 @@ async function addParkings(parkings) {
 
     parkings.forEach(parking => {
         console.log(parking)
-        addMarker(parking.geometry.y, parking.geometry.x, 'Vous êtes ici', 'Géolocalisation du client', 'url(./assets/images/1072465.png)')
+        addParkingMarker(parking.geometry.y, parking.geometry.x, parking)
     });
 }
 
+//Ajout des eventListener
+async function addEventClicks(parkings) {
+
+    parkings.forEach(parking => {
+        console.log(parking)
+        let button = document.getElementById(`btn-${parking._id.$oid}`)
+        console.log(`btn-${parking._id.$oid}`)
+        button.addEventListener("click", function(){
+            console.log("you clicked")
+        })
+    })
+}
 
 document.addEventListener("DOMContentLoaded", async function () {
     displayMap(48.692114, 6.184279);
