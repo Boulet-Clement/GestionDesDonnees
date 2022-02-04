@@ -1,19 +1,20 @@
 <html>
-    <script type="text/javascript">
 
-    let xhr = new XMLHttpRequest();
-        xhr.open('GET',"./parkings.php",true);
-        xhr.responseType = 'json';
-        xhr.send();
-        // les données arrivent correctement
-        xhr.addEventListener("load", function(response){
-            console.log(response.target.response);
-            //console.log(response.target.response);
-        });
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB</title>
+    <script src="./script.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
 
-        // on a un code d'erreur
-        xhr.addEventListener("error", function(response){
-            console.log('erreur: ' + response);
-        });
-    </script>
+</head>
+
+<body>
+    <h1>Voici les parkings de Nancy</h1>
+    <div id='map' style='width: 400px; height: 300px;'></div>
+
+</body>
+
 </html>
