@@ -14,41 +14,80 @@ function displayMap(lat, lon) {
 //Fonction d'ajout d'un marker
 function addParkingMarker(lat, long, parking) {
 
-    const el = document.createElement('div');
-
-    el.style.width = `40px`;
-    el.style.height = `60px`;
-    el.style.backgroundSize = '100%';
-    el.style.backgroundRepeat = 'no-repeat'
-
-    el.style.backgroundImage = 'url(./assets/images/1072465.png)';
-    let popup_div = document.createElement("div");
-    let popup_title = document.createElement("h1");
+    const popup_logo = document.createElement('div');
+        popup_logo.style.width = `40px`;
+        popup_logo.style.height = `60px`;
+        popup_logo.style.backgroundSize = '100%';
+        popup_logo.style.backgroundRepeat = 'no-repeat'
+        popup_logo.style.backgroundImage = 'url(./assets/images/1072465.png)';
+        const popup_div = document.createElement("div");
+    const popup_title = document.createElement("h1");
         popup_title.innerText = parking.attributes.NOM
-    let popup_button = document.createElement("button");
+    const popup_description = document.createElement("p");
+        popup_description.innerHTML = `capacité : ${parking.attributes.CAPACITE}
+            <br/> places: ${parking.attributes.PLACES}`
+        
+    const popup_button = document.createElement("button");
         popup_button.setAttribute("id","test")
-        popup_button.innerText="test";
+        popup_button.innerText="voir les commentaires";
         popup_button.addEventListener("click", function(){
-            console.log("ah")
+            displayComments(parking)
+            addInputForComment(parking)
+            console.log("voir les commentaires")
         })
         popup_div.appendChild(popup_title);
+        popup_div.appendChild(popup_description);
         popup_div.appendChild(popup_button);
     const popup = new mapboxgl.Popup({ offset: 25 }).setDOMContent(
         popup_div
     );
-        /* `<h1>${parking.attributes.NOM}</h1>
-        <p>capacité : ${parking.attributes.CAPACITE}
-            <br/> places: ${parking.attributes.PLACES}
-            <br/> <button id="btn-${parking._id.$oid}">Voir les commentaires</button>
-        </p>` */
-    new mapboxgl.Marker(el).setLngLat([long, lat]).setPopup(popup).addTo(map);
-    
+    new mapboxgl.Marker(popup_logo).setLngLat([long, lat]).setPopup(popup).addTo(map);
 }
 
+// Ajout de l'input pour les commentaires
+function addInputForComment(parking){
+    console.log(parking)
+    const formComment = document.createElement('form');
+        formComment.method='post'
+        formComment.name="form_comment"
+        formComment.action="/postComment.php"
+    const inputComment = document.createElement('input')
+        inputComment.name="input_comment"
+        inputComment.setAttribute("id", "input_comments")
+        inputComment.setAttribute("type", "text")
+    const inputID = document.createElement('input')
+        inputID.name="input_id"
+        inputID.setAttribute('id', "input_id")
+        inputID.setAttribute("type", "hidden")
+        inputID.value=parking._id.$oid
+    const buttonSubmit = document.createElement('button')
+        buttonSubmit.innerText="Envoyer"
+        buttonSubmit.setAttribute("type", "submit")
+    const div_comments = document.getElementById('comments')
+    div_comments.innerHTML=""
+    div_comments.appendChild(formComment)
+    formComment.appendChild(inputComment)
+    formComment.appendChild(inputID)
+    formComment.appendChild(buttonSubmit)
+}
+
+// Affichage des commentaires
+function displayComments(parking){
+    const divComments = document.createElement('div')
+        divComments.setAttribute("id","div_comments")
+        document.body.appendChild(divComments)
+    if (parking.attributes.comments){
+        comments.forEach(comment => {
+            const p_comment = document.createElement("p");
+            p_comment.innerText = comment
+            divComments.appendChild(p_comment)
+        });
+    }
+}
 //Ajout du marker rouge "vous êtes ici"
 async function addYouAreHere() {
-    let lat = 48.69211422805919;
-    let lon = 6.184279819931009;
+    const lat = 48.69211422805919;
+    const lon = 6.184279819931009;
     //createPoint(lat, lon, 'Vous êtes ici', 'Géolocalisation du client', 'url(./assets/images/1072465.png)')
     const el = document.createElement('div');
     el.style.width = `15px`;
@@ -62,9 +101,9 @@ async function addYouAreHere() {
         .addTo(map)
 }
 
-//Récupération des parkings
+// Récupération des parkings
 async function getParkings() {
-    let xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.open('GET', "./getParkings.php", true);
     xhr.responseType = 'json';
     xhr.send();
@@ -79,7 +118,7 @@ async function getParkings() {
     });
 }
 
-//Ajout des parkings à la carte
+// Ajout des parkings à la carte
 async function addParkings(parkings) {
 
     parkings.forEach(parking => {
@@ -88,19 +127,19 @@ async function addParkings(parkings) {
     });
 }
 
-//Ajout des eventListener
+// Ajout des eventListener sur les markers
 async function addEventClicks(parkings) {
 
     parkings.forEach(parking => {
         console.log(parking)
-        let button = document.getElementById(`btn-${parking._id.$oid}`)
+        const button = document.getElementById(`btn-${parking._id.$oid}`)
         console.log(`btn-${parking._id.$oid}`)
         button.addEventListener("click", function(){
             console.log("you clicked")
         })
     })
 }
-
+// "MAIN"
 document.addEventListener("DOMContentLoaded", async function () {
     displayMap(48.692114, 6.184279);
     addYouAreHere()
