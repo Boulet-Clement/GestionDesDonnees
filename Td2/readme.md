@@ -5,4 +5,4 @@
     - src/Model
     - src/query
 
-    -config/boostrap.php
+    - config/boostrap.php
