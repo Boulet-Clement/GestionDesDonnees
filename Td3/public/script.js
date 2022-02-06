@@ -73,11 +73,12 @@ function addInputForComment(parking){
 
 // Affichage des commentaires
 function displayComments(parking){
-    const divComments = document.createElement('div')
-        divComments.setAttribute("id","div_comments")
-        document.body.appendChild(divComments)
-    if (parking.attributes.comments){
-        comments.forEach(comment => {
+    console.log("aaah")
+    const divComments = document.getElementById('div_comments')
+        divComments.innerHTML=""
+        console.log(parking.comments)
+    if (parking.comments){
+        parking.comments.forEach(comment => {
             const p_comment = document.createElement("p");
             p_comment.innerText = comment
             divComments.appendChild(p_comment)
