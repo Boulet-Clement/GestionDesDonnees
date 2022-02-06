@@ -3,32 +3,33 @@
 require_once "../src/vendor/autoload.php" ;
 
 $client = new MongoDB\Client("mongodb://mongo");
-
 $collection = $client->td3->parkings;
 
-print_r($_POST);
+//On récupère les données postées
 $comment = $_POST['input_comment'];
 $parkingID = $_POST['input_id'];
-echo "Recherche";
 
-$cursor = $collection->findOne([],['_id'=>$parkingID]);
-// echo on a cherché
+//On cherche notre parking correspondant
+$cursor = $collection->findOne(["_id" => new MongoDB\BSON\ObjectID($parkingID)]);
 
-$parkingJSON = json_encode($cursor);
-
-var_dump($cursor);
-/*
-if ($parkingJSON === "[]"){
-  $response = file_get_contents('https://geoservices.grand-nancy.org/arcgis/rest/services/public/VOIRIE_Parking/MapServer/0/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=nom%2Cadresse%2Cplaces%2Ccapacite&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=pjson');
-  $json = json_decode($response);
-  foreach ($json->{'features'} as $item) {
-    $collection->insertOne($item);
-  }
-  $cursor = $collection->find();
-  $parkingJSON = json_encode(iterator_to_array($cursor));
+// Si il n'a pas encore de commentaire on créé le tableau
+if (!isset($cursor['comments'])){
+    $cursor['comments'] = [];
+    array_push($cursor['comments'],$comment);
+    $collection->updateOne(
+        [ '_id' => $cursor['_id'] ],
+        [ '$set' => [ 'comments' => $cursor['comments']]]
+    );
+//Sinon on lui ajoute simplement le commentaire
+}else{
+    $collection->updateOne(
+        [ '_id' => $cursor['_id'] ],
+        [ '$push' => [ 'comments' => $_POST['input_comment']]]
+    );
 }
+// On redirige vers la page de base
+header('Location: http://localhost:12080');
 
-echo $parkingJSON;*/
 
 
 
