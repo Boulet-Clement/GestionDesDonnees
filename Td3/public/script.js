@@ -117,6 +117,7 @@ function addInputForComment(parking){
         inputComment.name="input_comment"
         inputComment.setAttribute("id", "input_comments")
         inputComment.setAttribute("type", "text")
+        inputComment.setAttribute("required", "required")
     const inputID = document.createElement('input')
         inputID.name="input_id"
         inputID.setAttribute('id', "input_id")
